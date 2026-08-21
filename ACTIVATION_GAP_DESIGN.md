@@ -4,12 +4,15 @@ Date: 2026-08-21
 
 Status: the proposed fixed-shift activation theorem is valid as ordinary
 mathematics, survived the audits below, and its finite arithmetic core is now
-kernel-checked in `KempnerResearch/ActivationGap.lean`.  The stronger claim
-that a hypothetical Tutescu counterexample must have `c = 1` has **not** been
-proved.  What is proved exactly is that this reduction is equivalent to a new
-strict controller-defect bound.  Coprimality and equal Kempner value alone do
-not force that bound; the consecutive equation and the full factorial exponent
-caps are indispensable.
+kernel-checked in `KempnerResearch/ActivationGap.lean`,
+`KempnerResearch/ResidualCofactor.lean`, and
+`KempnerResearch/ResidualComplement.lean`.  The stronger claim that a
+hypothetical Tutescu counterexample must have `c = 1` has **not** been proved.
+What is now proved exactly is both the strict controller-defect classification
+and a five-branch factorization of every possible `c >= 2` case.  Coprimality
+and equal Kempner value alone do not eliminate any of those five branches;
+the consecutive equation and the full factorial exponent caps are
+indispensable.
 
 ## Conventions and domain corrections
 
@@ -315,6 +318,76 @@ The linear Diophantine equation alone always has integer solutions because
 `gcd(p^a,q^b)=1`.  The hard conditions are positivity, exact valuations,
 disjoint supports, and the factorial exponent caps on `u,v`.
 
+The controller exponent may be chosen to be the input's *full* `p`-valuation,
+not merely an arbitrary activating sub-power.  For such exact controllers,
+write the activation slacks as `alpha,beta`.  If
+
+\[
+r=R_m(x),\qquad s=R_m(y),\qquad m=pqc,
+\]
+
+then
+
+\[
+v_p(r)=1+\alpha,\qquad v_q(s)=1+\beta.
+\]
+
+Writing `m=r*s*ell` and removing those mandatory controller powers gives
+positive `p,q`-free coprime factors `u,v` such that
+
+\[
+\boxed{
+r=p^{1+\alpha}u,\qquad
+s=q^{1+\beta}v,\qquad
+c=p^\alpha q^\beta uv\ell.}
+\]
+
+This is kernel-checked by
+`ordered_exact_controllers_cofactor_partition`.  Its endpoint is exact:
+
+\[
+c=1\iff \alpha=\beta=0\ \text{ and }\ u=v=\ell=1.
+\]
+
+Consequently the entire `c>=2` branch is the exhaustive split
+
+\[
+\alpha>0\ \lor\ \beta>0\ \lor\ u>1\ \lor\ v>1\ \lor\ \ell>1.
+\]
+
+There is also a stronger factorial-complement parametrization.  Put
+
+\[
+F=(m-1)!,\qquad
+K=\frac{m!}{xy},\qquad
+d=\frac{m}{R_m(x)R_m(y)}.
+\]
+
+For coprime divisors `x,y` of `m!`, there are positive `A,B,L` with
+
+\[
+\boxed{
+x=R_m(x)A,\quad y=R_m(y)B,\quad
+K=dL,\quad ABL=F,}
+\]
+
+and
+
+\[
+\gcd(R_m(x),BL)=\gcd(R_m(y),AL)=1.
+\]
+
+Thus `d|K`.  For consecutive `y=x+1`, the remaining pointwise equation is
+
+\[
+\boxed{R_m(y)B-R_m(x)A=1.}
+\]
+
+The theorem `coprime_factorial_divisors_exact_complement` kernel-checks all
+of this except the final displayed subtraction, which follows immediately
+after substituting `y=x+1`.  This is the exact factorial-capped `S`-unit
+problem that a general `c>=2` proof must solve.
+
 ## Falsified strengthenings and smallest witnesses
 
 - **Coprime equal fibers force `c=1`: false.**
@@ -329,10 +402,18 @@ disjoint supports, and the factorial exponent caps on `u,v`.
   exponents are `a=8,b=2`, not `q+1=6,b=2`.  The Legendre-tail slack is
   `r=2`.
 - **Adjacency as a congruence forces `c=1`: unsupported.**
-  For the first `c=2` configuration `m=12,p=2,q=3,a=9,b=5`, the equation
-  `3^5 v-2^9 u=1` has the positive solution `u=28,v=59`.  It fails the
-  exact valuation and `12!`-smooth cofactor conditions, illustrating that
-  those global caps, not the congruence alone, do the eliminating.
+  For the first `c=2` configuration `m=12,p=2,q=3,a=9,b=5`, even the exact
+  controller valuations and adjacency equation are realized by
+  `2^9*271+1=3^5*571`.  The cofactors have primes larger than `12`, so the
+  pair fails factorial support.  The global caps, not the congruence alone,
+  do the eliminating.
+- **Minimal slacks force the cofactor to remain unused: false.**
+  At `m=12`, the coprime common-fiber pair `(512,243)=(2^9,3^5)` has residuals
+  `2,3` and leftover `2`, whereas `(1024,243)` has residuals `4,3` and
+  leftover `1`.  At `m=30,p=2,q=3,c=5`, both `(2^26,3^14)` and
+  `(2^26*5^7,3^14)` have minimal controller slacks; the first leaves `5`
+  unused and the second puts `5` into a residual.  Hence residual-budget
+  identities alone cannot eliminate any allocation of `c`.
 
 None of these examples is a Tutescu counterexample.  They delimit which
 hypotheses a future `c=1` proof must use.
@@ -374,15 +455,38 @@ All runs used exact integer arithmetic.
    `m<=100`, regardless of the size of `n`.  Since a consecutive common fiber
    needs two distinct prime divisors of `m`, prime-power `m=101` is also
    impossible; hence any counterexample has `m>=102`.
-5. The existing independent direct sieve `scripts/search_consecutive` was
+5. `python3 scripts/verify_berger_113_table.py` downloaded the public
+   `twin_smooths_113_sorted_full.txt` artifact at repository commit
+   `6fc4c364ee995a6aef5f788e29cdfc307d37f9a5`, verified SHA-256
+   `9ad599518af925638f1c72e6bdcc3cfd7a3c26554a6cca3c44930689bee7f43d`,
+   checked strict ordering and all 33,233 entries, independently factored
+   both neighbors over primes at most 113, and recomputed every exact Kempner
+   value.  It found zero equal-value pairs; the largest recomputed value was
+   452.  Since the next prime after 113 is 127, conditional on the external
+   completeness of the Størmer/Lehmer output this excludes every common value
+   `m<127`.  The kernel-checked prime-power theorem then excludes `m=127` and
+   `m=128`, so any counterexample has `m>=129`.  At `m=129=3*43`, two distinct
+   controllers force `c=1`; hence the `c>=2` branch starts at `m>=130`.
+6. `python3 scripts/search_c_ge_two.py --max-value 80
+   --cross-check-through 36` exhaustively enumerated every ordered controller
+   pair, both orientations, and every exact activation exponent for `c>=2`.
+   A meet-in-the-middle residue index compressed a summed unpruned space of
+   1,921,437,349,488 divisor choices to 311,547 modular-adjacency survivors.
+   All survivors failed smoothness of the opposite cofactor; none reached the
+   full factorial caps.  The modular enumeration was independently compared
+   with naive divisor enumeration through `m=36`.  This is an exact finite
+   audit through `m=80`, although item 5 already gives a stronger externally
+   complete value bound.
+7. The existing independent direct sieve `scripts/search_consecutive` was
    previously run through `n=10^8`; it found no equality.  PrimePuzzles
    reports an older direct verification through `10^9`, so neither bound is
    a record.
 
-The first three and fifth computations are falsification evidence only.  Item
-4 is a reproducible finite certificate whose unconditional use still depends
-on the external Størmer/Pell completeness theorem and the provenance of the
-published table; Lean does not claim that completeness.
+Items 1-3, 6, and 7 are internal finite computations.  Items 4 and 5 are
+reproducible post-processing certificates whose uniform conclusions still
+depend on the external Størmer/Pell completeness theorem and the provenance
+of the published tables; Lean does not claim either enumeration's
+completeness.
 
 ## Prior-art audit
 
@@ -430,20 +534,26 @@ expert review.
   `x^2-1`](https://arxiv.org/abs/1005.1533), together with their published
   corrected table, completely enumerates the case `P^+(x^2-1)<100`.  The
   Kempner filter described above is new post-processing of that enumeration,
-  not a new completeness proof.  Later work reports a complete `B=113`
-  computation with 33,233 pairs, but the full list was not located in a public
-  artifact during this audit; see
-  [Costello et al.](https://eprint.iacr.org/2019/1145.pdf) and
-  [Sterner et al.](https://eprint.iacr.org/2023/1576.pdf).
+  not a new completeness proof.  Later work reports that the complete
+  `B=113` computation contains 33,233 pairs.  A matching full artifact is now
+  public in [Daniel Berger's infrastructure repository at the pinned
+  commit](https://github.com/db711/infrastructure/blob/6fc4c364ee995a6aef5f788e29cdfc307d37f9a5/data/twin_smooths_113_sorted_full.txt):
+  it has exactly that count and the same reported largest pair.  See
+  [Cryptographic Smooth Neighbors](https://eprint.iacr.org/2022/1439.pdf) and
+  [Towards Optimally Small Smoothness
+  Bounds](https://eprint.iacr.org/2023/1576.pdf).  The byte/factorization audit
+  here still does not independently rerun the exhaustive Pell computation.
 - Heath-Brown, *The Differences Between Consecutive Smooth Numbers*
   (arXiv:1808.02947), treats the frequency of large gaps and explicitly
   notes that the method breaks down for gaps at most about `x^{1/3}`.  It
   does not reach the fixed gap `1` needed here.
-- Berend and Harmse, *Gaps between consecutive divisors of factorials*,
+- [Berend and Harmse, *Gaps between consecutive divisors of
+  factorials*](https://www.numdam.org/item/AIF_1993__43_3_569_0/),
   Ann. Inst. Fourier 43 (1993), 569-583, studies the ordered divisors of
-  `m!`.  A Tutescu counterexample would indeed give adjacent divisors of
-  `m!`, but the extra condition that both first enter at the final
-  factorial step is not addressed by their gap bounds.
+  `m!`.  Direct inspection of Theorems 2-4 confirms the mismatch: Theorem 2
+  gives a divisor near a target, while the central lower-gap conclusions are
+  density or infinitely-often statements.  None is a pointwise theorem that
+  excludes adjacent divisors both entering for the first time at step `m`.
 
 These are plausible toolkits for computation or average estimates, not a
 known route to the required pointwise `c=1` elimination.
@@ -506,6 +616,15 @@ Reusable declarations in `KempnerResearch/Basic.lean`:
 8. `factorialComplement` and
    `ActivatesAt.factorization_factorialComplement_lt_value`, plus the
    prime-power exclusion `not_consecutive_common_fiber_at_prime_power`.
+9. `IsKempnerValue.exists_exact_activating_prime_power`, exact residual
+   valuations, the residual/controller-core factorization, and
+   `ordered_exact_controllers_cofactor_partition` in
+   `ResidualCofactor.lean`; `cofactor_partition_cases_of_two_le` is the
+   exhaustive five-branch split.
+10. `cofactor_partition_eq_one_iff` and
+    `coprime_factorial_divisors_exact_complement` in
+    `ResidualComplement.lean`, giving the exact endpoint and the
+    `A*B*L=(m-1)!`, `K=d*L` parametrization.
 
 The file deliberately does **not** contain a theorem saying adjacency implies
 `D_ctrl<m`; that remains the missing mathematical lemma rather than a Lean
@@ -540,14 +659,33 @@ Moreover the exact activation slacks satisfy
 0\le\alpha\le v_p(c),\qquad 0\le\beta\le v_q(c),
 \]
 
-so minimal or near-minimal exponents are already automatic.  The corrected
-Luca--Najman enumeration gives the external-completeness-backed finite lower
-bound `m>=102` for any hypothetical counterexample.
+so minimal or near-minimal exponents are already automatic.  The public
+113-smooth artifact and the prime-power exclusion give the
+external-completeness-backed finite lower bound `m>=129` for any hypothetical
+counterexample, and `m>=130` in the `c>=2` branch.
 
-The next useful attack is to combine the residual-factor formulation with
-the Pell/S-unit representation of consecutive smooth numbers and ask for a
-pointwise lemma excluding two simultaneous last-step residuals when the
-oriented defect is at least `m`.  A productive split is:
+The new exact cofactor identity determines what a `c=1` reduction would have
+to prove: adjacency must rule out each of
+
+\[
+\alpha>0,\quad\beta>0,\quad u>1,\quad v>1,\quad\ell>1.
+\]
+
+Actual coprime equal-fiber examples realize both residual-allocation extremes,
+so no residual-budget inequality alone can do this.  The pure-controller-power
+subfamily is excluded by [Mihăilescu's
+theorem](https://doi.org/10.1515/crll.2004.048): the only consecutive perfect
+powers with both exponents greater than one are `8,9`, and their Kempner
+values are `4,6`.  This does not address factorial-smooth cofactors.
+
+The next useful attack is the exact constrained equation
+
+\[
+sB-rA=1,\qquad ABL=(m-1)!,
+\]
+
+with its cross-coprimality and cofactor-allocation conditions.  A productive
+split is:
 
 - `c>=2` or positive Legendre-tail defect: seek a factorial-budget or
   anti-sieve contradiction;
@@ -556,7 +694,16 @@ oriented defect is at least `m`.  A productive split is:
 - `c=1,q>=2p`: retain the explicit Legendre tail rather than calling the
   exponents minimal.
 
-For computation beyond `m=113`, the most concrete route is a
+The first target not covered by the 113-smooth artifact in the `c>=2` branch
+is `m=130`.  Its controller exponents are forced to `128,32,10`, but the
+current Python meet-in-the-middle halves would require between roughly 525
+million and 1.85 billion materialized integers per controller pair, beyond
+the 15 GiB host.  A complete `m=130` certificate therefore needs either a
+targeted parallel Størmer/Pell computation or a substantially stronger
+factorial-capped `S`-unit solver; merely raising the script limit is not a
+credible verification plan.
+
+For computation beyond the current certificates, the most concrete route is a
 factorial-capped `S`-unit solver.  It should enumerate only the exact exponent
 intervals above, enforce disjoint prime support, apply modular sieves and
 real/`p`-adic LLL, and emit small factorization or residue certificates for an
