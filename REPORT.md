@@ -198,8 +198,8 @@ The proof is independent of computation. Two independent audits were run.
    equality. More importantly for this theorem, only 30 of the (10^8)
    consecutive pairs survived the factorization-only necessary condition
    (4); direct Kempner values eliminated all 30. This is a validation run,
-   not a record: an older published web reference already reports direct
-   verification through (10^9).
+   not a record: the PrimePuzzles Conjecture 37 page reports that Eric
+   Weisstein verified the conjecture directly through (10^9) in March 2004.
 
 Candidate strengthenings were actively falsified:
 
@@ -304,18 +304,29 @@ stronger results:
   discussion of the consecutive-value problem;
 - Liu, *A Survey on Smarandache Notions in Number Theory I*;
 - Ivić, *On a Problem of Erdős Involving the Largest Prime Factor of n*;
+- T. D. Noe's September 2004 contribution on the PrimePuzzles Conjecture 37
+  page, describing a fixed-fiber search by activating prime powers and a
+  linear Diophantine equation;
 - the Kempner-function and Tutescu-related OEIS entries A002034, A099120,
   and A099143;
 - the indexed Kempner/Smarandache-function bibliography and targeted web
   searches for equal values, coprime arguments, fibers, maximal exponents,
   and smooth counterexamples.
 
-The nearest prior observation found is Ashbacher's: writing the two common
-values as (kp=rq), coprimality forces (q\mid k) and (p\mid r). The
+The closest indexed or book observation found is Ashbacher's: writing the two
+common values as (kp=rq), coprimality forces (q\mid k) and (p\mid r). The
 original Prodanescu--Tutescu note proves the still weaker fact that an
-argument and its Kempner value share a prime divisor. I found no source that
-adds the extra Legendre copy for the smaller prime, derives (1) or (2),
-classifies sharpness, or obtains the (X^{1/2+o(1)}) reduction.
+argument and its Kempner value share a prime divisor.
+
+There is also relevant non-indexed web prior art. A September 2004
+contribution by T. D. Noe on PrimePuzzles already organizes a counterexample
+search by a fixed common value (M), enumerates the activating prime powers
+(p^a) with (S(p^a)=M), and reduces consecutive candidates to
+(yq^b-xp^a=1). Thus the fixed-fiber/activating-prime-power search framework
+and its Diophantine formulation are not claimed as new here. Noe's account
+does not state the cross-exponent bounds (3), the global inequalities (1)--(2),
+their sharpness classification, or the (X^{1/2+o(1)}) reduction. No source
+located in this audit states those results.
 
 Accordingly, the theorem is **proved** (including a kernel-checked Lean
 formalization) and the expanded database audit supports the description
@@ -330,6 +341,7 @@ Links used in the audit:
 - [Liu's 2017 survey](https://fs.unm.edu/SF/ASurveyOnSmarandacheNotions1.pdf)
 - [Ivić's paper (arXiv)](https://arxiv.org/abs/math/0311056)
 - [Hildebrand--Tenenbaum on smooth numbers](https://jtnb.centre-mersenne.org/articles/10.5802/jtnb.101/)
+- [PrimePuzzles Conjecture 37, including T. D. Noe's September 2004 contribution](https://www.primepuzzles.net/conjectures/conj_037.htm)
 - [OEIS A002034](https://oeis.org/A002034),
   [A099120](https://oeis.org/A099120), and
   [A099143](https://oeis.org/A099143)

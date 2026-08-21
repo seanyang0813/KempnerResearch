@@ -505,7 +505,7 @@ def build_story():
         ),
         numbered(
             2,
-            "The consecutive sieve checked n&lt;=10^8. It found 0 equalities S(n)=S(n+1). Only 30 pairs survived the new factorization-only necessary condition, and direct Kempner values eliminated all 30.",
+            "The consecutive sieve checked n&lt;=10^8. It found 0 equalities S(n)=S(n+1). Only 30 pairs survived the new factorization-only necessary condition, and direct Kempner values eliminated all 30. This is validation, not a record: PrimePuzzles reports Weisstein's March 2004 verification through 10^9.",
         ),
         H2("Exact reproduction commands"),
         formula(
@@ -579,9 +579,9 @@ def build_story():
         bullet("There were no title hits coupling the function with consecutive, equal, equality, fiber, inverse, or exponent."),
         bullet("The three coprime title hits concern a distinct 0-1 characteristic function, not coprime inputs sharing a Kempner value."),
         bullet("Exact searches recovered the main known records and authors, including MR1650388, MR1364859, MR1416986, MR1294796, and the three editions/versions MR1294791, MR1361855, MR1398974."),
-        H2("Nearest prior results found"),
+        H2("Closest prior framework and results found"),
         P(
-            "Ashbacher observes that if equal values are written kp=rq using activating primes from the two coprime inputs, then q divides k and p divides r. Prodanescu and Tutescu prove the weaker fact that an input and its Kempner value share a prime factor. Neither source obtains the extra Legendre copy for the smaller prime or a global exponent-product bound.",
+            "A September 2004 contribution by T. D. Noe on PrimePuzzles already searches a fixed common value M by enumerating activating prime powers and solving yq^b-xp^a=1. Thus the fixed-fiber search framework and its Diophantine formulation are prior art, not claims of novelty here. Ashbacher separately observes the cross-divisibility forced by two activating primes, while Prodanescu and Tutescu prove that an input and its Kempner value share a prime factor. None of these sources states the qc+1/pc bounds, the global exponent-product obstruction, its sharp family, or the X^(1/2+o(1)) reduction.",
         ),
         callout(
             "Novelty conclusion",
@@ -627,7 +627,12 @@ def build_story():
             "reference",
         ),
         P(
-            "[6] <link href='https://zbmath.org/' color='#246B8E'>zbMATH Open</link> and "
+            "[6] T. D. Noe, September 2004 contribution to <i>Conjecture 37: The Tutescu's Conjecture</i>, PrimePuzzles. "
+            "<link href='https://www.primepuzzles.net/conjectures/conj_037.htm' color='#246B8E'>Web page</link>, accessed 2026-08-20.",
+            "reference",
+        ),
+        P(
+            "[7] <link href='https://zbmath.org/' color='#246B8E'>zbMATH Open</link> and "
             "<link href='https://mathscinet.ams.org/mrlookup' color='#246B8E'>MathSciNet MR Lookup</link>, database audit performed 2026-08-20.",
             "reference",
         ),
