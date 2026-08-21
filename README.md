@@ -31,6 +31,13 @@ received independent expert peer review. The MathSciNet/zbMATH audit found no
 equivalent result in the searches described in the report; that supports
 "apparently novel," not certified novelty.
 
+The fixed-fiber search framework itself is not claimed as new: a September
+2004 contribution by T. D. Noe already described searching a common Kempner
+value through activating prime powers and a linear Diophantine equation on
+[PrimePuzzles Conjecture 37](https://www.primepuzzles.net/conjectures/conj_037.htm).
+The claimed contribution here is the sharp quantitative obstruction and its
+consequences.
+
 OpenAI Codex assisted with exploratory proof search, literature-query
 formulation, computation, Lean formalization, and drafting. A human author
 must independently verify and take responsibility for the work before journal
