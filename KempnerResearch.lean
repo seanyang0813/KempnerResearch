@@ -1,2 +1,4 @@
 import KempnerResearch.Basic
 import KempnerResearch.ActivationGap
+import KempnerResearch.ResidualCofactor
+import KempnerResearch.ResidualComplement
