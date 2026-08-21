@@ -12,7 +12,12 @@ What is now proved exactly is both the strict controller-defect classification
 and a five-branch factorization of every possible `c >= 2` case.  Coprimality
 and equal Kempner value alone do not eliminate any of those five branches;
 the consecutive equation and the full factorial exponent caps are
-indispensable.
+indispensable.  The sharper residual-core parametrization below reduces each
+fixed residual pair to one bounded divisor-in-progression problem.  An exact
+standalone computation using that reduction now excludes common value
+`m=130`.  A uniform Matveev argument also rules out sparse free support in
+every sufficiently large `c>=2` case, but no uniform contradiction or
+reduction of all counterexamples to `c=1` has been proved.
 
 ## Conventions and domain corrections
 
@@ -388,6 +393,185 @@ of this except the final displayed subtraction, which follows immediately
 after substituting `y=x+1`.  This is the exact factorial-capped `S`-unit
 problem that a general `c>=2` proof must solve.
 
+The factorial complement can be sharpened once more.  For a positive
+residual `t`, define its saturated old-factorial part by
+
+\[
+P_t=\prod_{\ell\mid t}\ell^{v_\ell(F)}.
+\]
+
+The cross-coprimality above forces every copy of every prime supporting `r`
+into `A`, and similarly for `s`.  Hence, writing `r=R_m(x)` and `s=R_m(y)`,
+there are positive `X,Y` with
+
+\[
+A=P_rX,\qquad B=P_sY.
+\]
+
+Put
+
+\[
+R=rP_r,\qquad S=sP_s,\qquad
+H=\frac{F}{P_rP_s}.
+\]
+
+After choosing the orientation `y=x+1`, every hypothetical counterexample
+with these residuals is therefore exactly a solution of
+
+\[
+\boxed{RX+1=SY,\qquad XYL=H.}
+\]
+
+Conversely, any positive solution of these two equations reconstructs
+`x=RX`, `y=SY`: the two numbers are consecutive, their product divides
+`m!`, neither divides `(m-1)!`, and their exact last-step residuals are
+`r,s`.  Thus both Kempner values are exactly `m`.  This gives a complete
+finite criterion, not merely a necessary congruence.
+
+For fixed `r,s`, let `X_0` be the least positive solution of
+
+\[
+RX_0\equiv-1\pmod S,
+\qquad Y_0=\frac{RX_0+1}{S}.
+\]
+
+All positive solutions of the adjacency equation are
+
+\[
+X=X_0+kS,\qquad Y=Y_0+kR\qquad(k\ge0).
+\]
+
+The entire remaining obstruction is consequently
+
+\[
+\boxed{(X_0+kS)(Y_0+kR)\mid H.}
+\]
+
+This explains why extended Euclid, continued fractions, or LLL applied only
+to the two-variable linear equation cannot prove `c=1`: that equation is
+already solved completely.  Any successful use of Baker--LLL or an `S`-unit
+algorithm must enforce the bounded prime support and every factorial
+exponent cap in `H`.
+
+The leftover `d=m/(rs)` also has an exact interpretation.  The case `d=1`
+is equivalent to `rs=m`, so the two residuals consume the entire final-step
+valuation budget.  In the controller notation this forces
+
+\[
+\alpha=v_p(c),\qquad \beta=v_q(c),
+\]
+
+and assigns every remaining prime power of `c` wholly to one of the two
+residual cores.  In the case `d>1`, `d` is exactly the unused final-step
+budget, while `L` contains only unused old-factorial budget at primes outside
+`rs`.  Neither alternative is intrinsically contradictory.
+
+### A uniform free-support obstruction
+
+The exact split does yield one all-`m` restriction.  Suppose a hypothetical
+`c>=2` counterexample has the residual-core form
+
+\[
+x=Ra,\qquad x+1=Sb,\qquad ab\mid H,
+\]
+
+and put
+
+\[
+j=\omega(rs),\qquad h=\omega(ab),\qquad k=j+h.
+\]
+
+The supports of `rs` and `ab` are disjoint, so `k` is exactly the number of
+distinct primes in `x(x+1)`.  If `p` is the smaller controller prime, then
+the lower of the two consecutive inputs is at least
+
+\[
+\min(x,x+1)\ge p^{m/p}-1.
+\]
+
+Write the primes in `x(x+1)` as `t_i` and set
+
+\[
+b_i=v_{t_i}(x+1)-v_{t_i}(x).
+\]
+
+Every `t_i<=m`, every `b_i` is nonzero, and
+`|b_i|<=v_{t_i}(m!)<m`.  The rational specialization of
+[Matveev's explicit lower bound for linear forms in
+logarithms](https://doi.org/10.1070/im2000v064n06ABEH000314), applied to
+
+\[
+\prod_i t_i^{b_i}-1=\frac1x,
+\]
+
+therefore gives
+
+\[
+\log\!\left(p^{m/p}-1\right)
+ <1.4\,30^{k+3}k^{9/2}(1+\log m)
+   \prod_i\log t_i.
+\]
+
+This can be made sensitive to the *free* support rather than merely the
+total support.  Since `rad(rs)|m`, AM--GM gives
+
+\[
+\prod_{t\mid rs}\log t
+ \le \left(\frac{\log m}{j}\right)^j,
+\]
+
+while every free prime is at most `m`, so
+
+\[
+\boxed{
+\log\!\left(p^{m/p}-1\right)
+ <1.4\,30^{j+h+3}(j+h)^{9/2}(1+\log m)
+ \left(\frac{\log m}{j}\right)^j(\log m)^h.}
+\]
+
+Also `(j+1)!<=rad(rs)<=m`, hence
+`j=O(log m/log log m)` by Stirling.  Because `c>=2` and the other controller
+is larger than `p`, one has `p<sqrt(m/2)` and
+
+\[
+\log\log\!\left(p^{m/p}-1\right)
+ \ge \left(\frac12+o(1)\right)\log m.
+\]
+
+Taking logarithms in the boxed Matveev bound now proves the uniform necessary
+condition
+
+\[
+\boxed{
+\omega(ab)\ge
+ \left(\frac12-o(1)\right)\frac{\log m}{\log\log m}.}
+\]
+
+More precisely,
+
+\[
+\omega(ab)\ge(1-o(1))
+ \frac{\log((m/p)\log p)}{\log\log m};
+\]
+
+if `p=m^(theta+o(1))` with `0<=theta<=1/2`, the leading coefficient is
+`1-theta`.  In particular, a fixed or subpolynomial smaller controller forces
+coefficient `1`, while the balanced worst case gives `1/2`.
+
+This is a genuine uniform reduction: sparse-support counterexamples in the
+`c>=2` regime are impossible.  It is not a contradiction, because the
+factorial complement has far more than this many available primes.  Under
+the `abc` conjecture, `rad(x(x+1))=rad(rs)rad(ab)<=m^(h+1)` and the same
+activation lower bound implies that, for every fixed `delta>0` and all
+sufficiently large hypothetical solutions,
+
+\[
+\omega(ab)\ge\left(\frac1{\sqrt2}-\delta\right)\sqrt m,
+\]
+
+but even that conditional support lower bound remains below the available
+prime count.  Neither statement proves `c=1`.
+
 ## Falsified strengthenings and smallest witnesses
 
 - **Coprime equal fibers force `c=1`: false.**
@@ -414,6 +598,13 @@ problem that a general `c>=2` proof must solve.
   `(2^26*5^7,3^14)` have minimal controller slacks; the first leaves `5`
   unused and the second puts `5` into a residual.  Hence residual-budget
   identities alone cannot eliminate any allocation of `c`.
+- **A large unused final-step budget contradicts equal fibers: false.**
+  For every `m=6c`, the minimally activating powers
+  `2^(v_2((m-1)!)+1)` and `3^(v_3((m-1)!)+1)` are coprime and both first
+  divide a factorial at `m`.  Their residuals are `2,3`, so their leftover is
+  exactly `d=c`, which is unbounded.  These pairs are not consecutive, but
+  they prove that equal-fiber and residual-budget identities cannot supply a
+  bound on `d` without using adjacency and the cofactor support caps together.
 
 None of these examples is a Tutescu counterexample.  They delimit which
 hypotheses a future `c=1` proof must use.
@@ -477,12 +668,23 @@ All runs used exact integer arithmetic.
    with naive divisor enumeration through `m=36`.  This is an exact finite
    audit through `m=80`, although item 5 already gives a stronger externally
    complete value bound.
-7. The existing independent direct sieve `scripts/search_consecutive` was
+7. `scripts/search_residual_exact.cpp` implements the saturated residual-core
+   criterion with a duplicate-preserving modular meet in the middle and an
+   exact reconstruction checker.  Six standalone runs exhaust the 12 ordered
+   residual pairs at `m=130`.  Together they enumerate
+   1,061,410,848,532,070,400 free-divisor allocations; five residual groups
+   have no survivor modulo the printed 63-bit divisor of the larger core, and
+   the sole modular survivor in the sixth group fails the full `2^128`
+   congruence.  There are zero exact candidates.  This computation does not
+   use the external smooth-neighbor tables.  Source and binary hashes, every
+   domain count, command, result, exit status, timing, memory bound, and the
+   completeness argument are recorded in `M130_RESIDUAL_CERTIFICATE.md`.
+8. The existing independent direct sieve `scripts/search_consecutive` was
    previously run through `n=10^8`; it found no equality.  PrimePuzzles
    reports an older direct verification through `10^9`, so neither bound is
    a record.
 
-Items 1-3, 6, and 7 are internal finite computations.  Items 4 and 5 are
+Items 1-3 and 6-8 are internal finite computations.  Items 4 and 5 are
 reproducible post-processing certificates whose uniform conclusions still
 depend on the external Størmer/Pell completeness theorem and the provenance
 of the published tables; Lean does not claim either enumeration's
@@ -694,23 +896,46 @@ split is:
 - `c=1,q>=2p`: retain the explicit Legendre tail rather than calling the
   exponents minimal.
 
-The first target not covered by the 113-smooth artifact in the `c>=2` branch
-is `m=130`.  Its controller exponents are forced to `128,32,10`, but the
-current Python meet-in-the-middle halves would require between roughly 525
-million and 1.85 billion materialized integers per controller pair, beyond
-the 15 GiB host.  A complete `m=130` certificate therefore needs either a
-targeted parallel Størmer/Pell computation or a substantially stronger
-factorial-capped `S`-unit solver; merely raising the script limit is not a
-credible verification plan.
+The first `c>=2` target after the external lower bound was `m=130`.  Here the
+saturated single-prime cores are
 
-For computation beyond the current certificates, the most concrete route is a
-factorial-capped `S`-unit solver.  It should enumerate only the exact exponent
-intervals above, enforce disjoint prime support, apply modular sieves and
-real/`p`-adic LLL, and emit small factorization or residue certificates for an
-independent checker.  Generic `S`-unit finiteness is insufficient because the
-prime set grows with `m`; smooth-number and anti-sieve theorems currently give
-average rather than pointwise control.
+\[
+2^{128},\qquad 5^{32},\qquad 13^{10}.
+\]
 
-Until the first branch is eliminated, reducing all hypothetical
-counterexamples to the near-sharp endpoint is an open intermediate lemma,
-not an established consequence of activation-gap rigidity.
+The exact residual solver now eliminates all six unordered residual groups,
+including both `d=1` and `d>1`, without using the external smooth-neighbor
+artifact.  The successful local obstruction is particularly clean: for five
+groups, no divisor of the bounded factorial complement occupies either
+required inverse residue class modulo a 63-bit divisor of the larger core.
+For `{2,13}`, one allocation survives modulo `2^63` but does not lift to the
+full `2^128` core.  No candidate reaches the later smoothness or product-cap
+checks.
+
+This finite obstruction is not itself uniform.  Smaller values already have
+divisors satisfying the saturated-core congruence; for example, at `m=28`
+the residual configuration `r=2,s=7,d=2` has a factorial-supported
+one-sided cofactor `1035`, while the reconstructed opposite cofactor is
+`7,232,161=59*122,579` and fails only because of a prime larger than `m`.
+Thus a theorem merely asserting avoidance of the inverse residue class is
+false.  The all-`m` target must use both parts of
+
+\[
+RX+1=SY,\qquad XY\mid H,
+\]
+
+or prove that every one-sided congruence survivor has an impermissible prime
+or exponent on the opposite side.
+
+Further value-by-value enumeration is not the main strategy.  A fixed-support
+`S`-unit solver can certify another individual `m`, and discrete logarithms
+can turn the prime-power congruence into a bounded linear congruence, but
+generic `S`-unit finiteness and Baker--LLL bounds are nonuniform here because
+the support grows with `m`.  The desired result remains a pointwise
+factorial-cap theorem valid for every `m`, not an indefinitely extended
+table.
+
+The Matveev bound eliminates every sparse-free-support subfamily but not the
+whole `c>=2` branch.  Reducing all hypothetical counterexamples to the
+near-sharp endpoint therefore remains an open intermediate lemma, not an
+established consequence of activation-gap rigidity.
